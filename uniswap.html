@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UniSwap BH | Student Marketplace</title>
+  <style>
+    :root {
+      --primary: #32106f;
+      --secondary: #6d28d9;
+      --accent: #9f7aea;
+      --soft: #f3ecff;
+      --soft-2: #eee6ff;
+      --dark: #14082f;
+      --text: #51476b;
+      --white: #ffffff;
+      --success: #22c55e;
+      --shadow: 0 18px 45px rgba(50, 16, 111, 0.16);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: linear-gradient(180deg, #fbf8ff 0%, #f2ebff 100%);
+      color: var(--dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 8px 30px rgba(50, 16, 111, 0.08);
+    }
+
+    nav {
+      max-width: 1180px;
+      margin: auto;
+      padding: 16px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--primary);
+      letter-spacing: -1px;
+    }
+
+    .logo-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+      color: var(--white);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      box-shadow: 0 10px 22px rgba(109, 40, 217, 0.3);
+    }
+
+    .logo span { color: var(--secondary); }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--dark);
+      font-weight: 700;
+      font-size: 14px;
+      transition: 0.25s;
+    }
+
+    .nav-links a:hover { color: var(--secondary); }
+
+    .menu-btn {
+      display: none;
+      color: var(--primary);
+      font-size: 30px;
+      cursor: pointer;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 24px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-weight: 800;
+      transition: 0.25s;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      color: var(--white);
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      box-shadow: 0 12px 25px rgba(109, 40, 217, 0.28);
+    }
+
+    .btn-primary:hover,
+    .btn-light:hover,
+    .btn-outline:hover {
+      transform: translateY(-3px);
+    }
+
+    .btn-light {
+      background: var(--white);
+      color: var(--primary);
+      box-shadow: 0 12px 25px rgba(109, 40, 217, 0.16);
+    }
+
+    .btn-outline {
+      border: 2px solid rgba(255, 255, 255, 0.75);
+      color: var(--white);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .hero {
+      min-height: 100vh;
+      padding: 130px 22px 80px;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 80% 20%, rgba(159, 122, 234, 0.35), transparent 30%),
+        radial-gradient(circle at 10% 75%, rgba(109, 40, 217, 0.22), transparent 26%),
+        linear-gradient(135deg, #fbf8ff 0%, #f1eaff 60%, #e8dcff 100%);
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(109, 40, 217, 0.12);
+      z-index: 0;
+    }
+
+    .hero::before {
+      width: 360px;
+      height: 360px;
+      right: -90px;
+      top: 120px;
+    }
+
+    .hero::after {
+      width: 220px;
+      height: 220px;
+      left: -70px;
+      bottom: 80px;
+    }
+
+    .hero-container {
+      max-width: 1180px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 55px;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(109, 40, 217, 0.1);
+      color: var(--secondary);
+      border: 1px solid rgba(109, 40, 217, 0.16);
+      padding: 9px 15px;
+      border-radius: 999px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 6vw, 78px);
+      line-height: 0.98;
+      color: var(--dark);
+      letter-spacing: -3px;
+      margin-bottom: 20px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #16003f, #6d28d9, #9f7aea);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 20px;
+      color: var(--text);
+      max-width: 650px;
+      margin-bottom: 28px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+
+    .mini-points {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      max-width: 650px;
+    }
+
+    .mini-point {
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid rgba(109, 40, 217, 0.12);
+      border-radius: 18px;
+      padding: 14px;
+      color: var(--primary);
+      font-weight: 800;
+      box-shadow: 0 10px 24px rgba(50, 16, 111, 0.08);
+    }
+
+    .phone-wrap {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 620px;
+    }
+
+    .phone-bg {
+      position: absolute;
+      width: 430px;
+      height: 430px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #d9c8ff, #8b5cf6);
+      filter: drop-shadow(0 28px 45px rgba(109, 40, 217, 0.28));
+    }
+
+    .phone {
+      width: 310px;
+      min-height: 600px;
+      background: #15121d;
+      border-radius: 44px;
+      padding: 13px;
+      box-shadow: 0 30px 70px rgba(20, 8, 47, 0.35);
+      position: relative;
+      transform: rotate(4deg);
+      z-index: 2;
+    }
+
+    .screen {
+      background: linear-gradient(180deg, #fbf8ff, #f1eaff);
+      min-height: 574px;
+      border-radius: 34px;
+      padding: 24px 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.55);
+    }
+
+    .phone-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--dark);
+      font-weight: 800;
+      margin-bottom: 22px;
+      font-size: 13px;
+    }
+
+    .phone-title span {
+      display: block;
+      font-size: 13px;
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .phone-title strong {
+      font-size: 33px;
+      line-height: 1;
+      color: var(--primary);
+    }
+
+    .phone-search {
+      margin: 17px 0 19px;
+      background: var(--white);
+      border-radius: 16px;
+      padding: 12px 13px;
+      color: #8b7ca9;
+      box-shadow: 0 8px 18px rgba(50, 16, 111, 0.08);
+      font-size: 14px;
+    }
+
+    .phone-cats {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+
+    .phone-cat {
+      text-align: center;
+      font-size: 10px;
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .phone-cat div {
+      height: 40px;
+      width: 40px;
+      margin: auto auto 5px;
+      border-radius: 50%;
+      background: #e7dbff;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      color: var(--secondary);
+    }
+
+    .featured-head {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 900;
+      color: var(--dark);
+      margin-bottom: 10px;
+    }
+
+    .featured-head a { color: var(--secondary); font-size: 12px; }
+
+    .phone-items {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .phone-item {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 8px;
+      box-shadow: 0 8px 18px rgba(50, 16, 111, 0.08);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .product-img {
+      height: 68px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #e5dcff, #fff);
+      display: grid;
+      place-items: center;
+      font-size: 27px;
+      margin-bottom: 7px;
+    }
+
+    .phone-item span {
+      display: block;
+      color: var(--secondary);
+      margin-top: 3px;
+    }
+
+    .list-btn {
+      margin-top: 20px;
+      width: 100%;
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      color: white;
+      border-radius: 16px;
+      padding: 13px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .floating-product {
+      position: absolute;
+      z-index: 3;
+      background: var(--white);
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      font-size: 38px;
+    }
+
+    .float-book { left: 30px; bottom: 120px; }
+    .float-bag { right: 25px; bottom: 90px; }
+    .float-laptop { right: 10px; top: 115px; }
+
+    section { padding: 85px 22px; }
+
+    .container {
+      max-width: 1180px;
+      margin: auto;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 45px;
+    }
+
+    .section-title h2 {
+      font-size: clamp(32px, 4vw, 48px);
+      color: var(--primary);
+      margin-bottom: 12px;
+      letter-spacing: -1px;
+    }
+
+    .section-title p {
+      color: var(--text);
+      max-width: 760px;
+      margin: auto;
+      font-size: 18px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(109, 40, 217, 0.12);
+      border-radius: 28px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+      transition: 0.25s;
+    }
+
+    .card:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 24px 50px rgba(50, 16, 111, 0.2);
+    }
+
+    .icon {
+      width: 68px;
+      height: 68px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, #efe7ff, #ded0ff);
+      color: var(--secondary);
+      display: grid;
+      place-items: center;
+      font-size: 30px;
+      margin-bottom: 18px;
+    }
+
+    .card h3 {
+      color: var(--primary);
+      margin-bottom: 10px;
+      font-size: 22px;
+    }
+
+    .card p { color: var(--text); }
+
+    .problem {
+      background: var(--white);
+    }
+
+    .solution {
+      background:
+        radial-gradient(circle at 10% 20%, rgba(159, 122, 234, 0.22), transparent 26%),
+        linear-gradient(135deg, #32106f, #6d28d9);
+      color: var(--white);
+    }
+
+    .solution .section-title h2,
+    .solution .section-title p {
+      color: var(--white);
+    }
+
+    .solution .card {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.2);
+      color: var(--white);
+      box-shadow: none;
+    }
+
+    .solution .card h3,
+    .solution .card p {
+      color: var(--white);
+    }
+
+    .solution .icon {
+      background: rgba(255, 255, 255, 0.18);
+      color: var(--white);
+    }
+
+    .about {
+      background: #fbf8ff;
+    }
+
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 44px;
+      align-items: center;
+    }
+
+    .about-panel {
+      background: var(--white);
+      padding: 38px;
+      border-radius: 32px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(109, 40, 217, 0.12);
+    }
+
+    .about-panel h2 {
+      color: var(--primary);
+      font-size: 42px;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .about-panel p {
+      color: var(--text);
+      margin-bottom: 16px;
+      font-size: 17px;
+    }
+
+    .check-list {
+      list-style: none;
+      margin-top: 20px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .check-list li {
+      background: var(--soft);
+      color: var(--primary);
+      padding: 13px 16px;
+      border-radius: 16px;
+      font-weight: 800;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .stat {
+      background: var(--white);
+      border-radius: 28px;
+      padding: 26px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(109, 40, 217, 0.12);
+    }
+
+    .stat h3 {
+      color: var(--secondary);
+      font-size: 35px;
+      margin-bottom: 5px;
+    }
+
+    .stat p {
+      color: var(--text);
+      font-weight: 800;
+    }
+
+    .steps {
+      background: var(--soft);
+    }
+
+    .step-number {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      color: var(--white);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 22px;
+      margin-bottom: 16px;
+    }
+
+    .categories .card {
+      text-align: center;
+      padding: 24px;
+    }
+
+    .categories .icon {
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 50%;
+    }
+
+    .revenue {
+      background: var(--white);
+    }
+
+    .revenue .card {
+      border-left: 6px solid var(--secondary);
+    }
+
+    .cta {
+      padding: 80px 22px;
+      background:
+        radial-gradient(circle at 90% 15%, rgba(159, 122, 234, 0.35), transparent 25%),
+        linear-gradient(135deg, #17043f, #4c1d95 55%, #7c3aed);
+      color: var(--white);
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: clamp(32px, 5vw, 58px);
+      margin-bottom: 12px;
+    }
+
+    .cta p {
+      max-width: 740px;
+      margin: 0 auto 26px;
+      font-size: 19px;
+      opacity: 0.9;
+    }
+
+    .contact {
+      background: #fbf8ff;
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 32px;
+      align-items: stretch;
+    }
+
+    .contact-info {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: var(--white);
+      border-radius: 32px;
+      padding: 35px;
+      box-shadow: var(--shadow);
+    }
+
+    .contact-info h3 {
+      font-size: 32px;
+      margin-bottom: 15px;
+    }
+
+    .contact-info p {
+      opacity: 0.92;
+      margin-bottom: 22px;
+    }
+
+    .contact-pill {
+      background: rgba(255, 255, 255, 0.14);
+      padding: 13px 15px;
+      border-radius: 16px;
+      margin-top: 12px;
+      font-weight: 800;
+    }
+
+    form {
+      background: var(--white);
+      border-radius: 32px;
+      padding: 35px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(109, 40, 217, 0.12);
+    }
+
+    label {
+      display: block;
+      color: var(--primary);
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid #ddd3f5;
+      background: #fbf8ff;
+      outline: none;
+      font-size: 15px;
+      margin-bottom: 17px;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 4px rgba(109, 40, 217, 0.1);
+    }
+
+    .success-box {
+      background: #dcfce7;
+      color: #166534;
+      border-radius: 16px;
+      padding: 14px 16px;
+      margin-bottom: 18px;
+      font-weight: 800;
+    }
+
+    footer {
+      background: #120629;
+      color: rgba(255, 255, 255, 0.78);
+      text-align: center;
+      padding: 28px 20px;
+    }
+
+    .top-btn {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: none;
+      color: var(--white);
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 15px 28px rgba(50, 16, 111, 0.3);
+      display: none;
+      z-index: 20;
+    }
+
+
+
+    .lang-toggle {
+      padding: 9px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(109, 40, 217, 0.22);
+      background: var(--soft);
+      color: var(--primary);
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .trust-note {
+      margin-top: 22px;
+      color: var(--text);
+      text-align: center;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .mockups {
+      background: #fbf8ff;
+    }
+
+    .mockup-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .mockup-card {
+      background: var(--white);
+      border-radius: 30px;
+      padding: 18px;
+      border: 1px solid rgba(109, 40, 217, 0.12);
+      box-shadow: var(--shadow);
+    }
+
+    .mockup-screen {
+      min-height: 360px;
+      border-radius: 26px;
+      background: linear-gradient(180deg, #f4edff, #ffffff);
+      border: 1px dashed rgba(109, 40, 217, 0.35);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 24px;
+      color: var(--primary);
+      font-weight: 900;
+    }
+
+    .mockup-card p {
+      margin-top: 14px;
+      color: var(--text);
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .objection {
+      background: var(--white);
+    }
+
+    .objection-box {
+      max-width: 920px;
+      margin: auto;
+      background: linear-gradient(135deg, #32106f, #6d28d9);
+      color: var(--white);
+      border-radius: 34px;
+      padding: 42px;
+      box-shadow: var(--shadow);
+    }
+
+    .objection-box h2 {
+      font-size: clamp(30px, 4vw, 46px);
+      margin-bottom: 14px;
+    }
+
+    .objection-box p {
+      font-size: 18px;
+      opacity: 0.94;
+      margin-bottom: 18px;
+    }
+
+    .waitlist-note {
+      margin-top: 15px;
+      font-size: 14px;
+      color: var(--text);
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .form-status {
+      display: none;
+      border-radius: 16px;
+      padding: 14px 16px;
+      margin-bottom: 18px;
+      font-weight: 800;
+    }
+
+    .form-status.success { background: #dcfce7; color: #166534; display: block; }
+    .form-status.error { background: #fee2e2; color: #991b1b; display: block; }
+
+    body.ar {
+      direction: rtl;
+      text-align: right;
+    }
+
+    body.ar .section-title,
+    body.ar .stat,
+    body.ar footer,
+    body.ar .cta,
+    body.ar .mockup-screen,
+    body.ar .mockup-card p {
+      text-align: center;
+    }
+
+    @media (max-width: 950px) {
+      .hero-container,
+      .about-layout,
+      .contact-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .phone-wrap { min-height: 560px; }
+
+      .grid-3 { grid-template-columns: 1fr 1fr; }
+      .grid-4, .stats, .mockup-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .menu-btn { display: block; }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 74px;
+        left: 0;
+        width: 100%;
+        background: var(--white);
+        padding: 22px;
+        flex-direction: column;
+        box-shadow: 0 18px 30px rgba(50, 16, 111, 0.12);
+      }
+
+      .nav-links.active { display: flex; }
+
+      .hero { padding-top: 115px; }
+      .hero h1 { letter-spacing: -1px; }
+
+      .mini-points,
+      .grid-3,
+      .grid-4,
+      .stats,
+      .mockup-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .phone {
+        width: 285px;
+        transform: rotate(0);
+      }
+
+      .phone-bg {
+        width: 320px;
+        height: 320px;
+      }
+
+      .floating-product { display: none; }
+
+      section { padding: 65px 18px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a class="logo" href="#home">
+        <span class="logo-badge">U</span>
+        Uni<span>Swap</span>
+      </a>
+      <div class="menu-btn" id="menuBtn">☰</div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#problem">Problem</a></li>
+        <li><a href="#solution">Solution</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#market">Market</a></li>
+        <li><a href="#mockups">Mockups</a></li>
+        <li><a href="#contact">Join</a></li>
+        <li><button class="lang-toggle" id="langToggle" type="button">العربية</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-container">
+        <div>
+          <div class="eyebrow">🎓 Made for Students, By Students</div>
+          <h1><span class="gradient-text">Buy. Sell. Swap.</span><br>Smart.</h1>
+          <p>
+            UniSwap BH is a smart university marketplace where students can buy, sell, and exchange
+            second-hand items safely inside a trusted campus community.
+          </p>
+
+          <div class="hero-buttons">
+            <a href="#contact" class="btn btn-primary">Join the Waitlist</a>
+            <a href="#solution" class="btn btn-light">Explore the Idea</a>
+          </div>
+
+          <div class="mini-points">
+            <div class="mini-point">🔐 Verified Students</div>
+            <div class="mini-point">💬 Secure Chat</div>
+            <div class="mini-point">♻️ Reduce Waste</div>
+          </div>
+        </div>
+
+        <div class="phone-wrap">
+          <div class="phone-bg"></div>
+          <div class="floating-product float-book">📚</div>
+          <div class="floating-product float-bag">🎒</div>
+          <div class="floating-product float-laptop">💻</div>
+
+          <div class="phone">
+            <div class="screen">
+              <div class="phone-top">
+                <span>9:41</span>
+                <span>🔔 💬</span>
+              </div>
+
+              <div class="phone-title">
+                <span>Welcome to</span>
+                <strong>UniSwap</strong>
+              </div>
+
+              <div class="phone-search">🔍 Search for items...</div>
+
+              <div class="phone-cats">
+                <div class="phone-cat"><div>💻</div>Tech</div>
+                <div class="phone-cat"><div>📚</div>Books</div>
+                <div class="phone-cat"><div>👕</div>Wear</div>
+                <div class="phone-cat"><div>🪑</div>Home</div>
+                <div class="phone-cat"><div>✏️</div>Study</div>
+              </div>
+
+              <div class="featured-head">
+                <span>Featured Items</span>
+                <a href="#categories">See all</a>
+              </div>
+
+              <div class="phone-items">
+                <div class="phone-item">
+                  <div class="product-img">📘</div>
+                  Engineering Textbook
+                  <span>BD 5.000</span>
+                </div>
+                <div class="phone-item">
+                  <div class="product-img">💻</div>
+                  MacBook Air
+                  <span>BD 120.000</span>
+                </div>
+                <div class="phone-item">
+                  <div class="product-img">🎒</div>
+                  Backpack
+                  <span>BD 10.000</span>
+                </div>
+              </div>
+
+              <div class="list-btn">+ List an Item</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="problem" id="problem">
+      <div class="container">
+        <div class="section-title">
+          <h2>The Problem Students Face</h2>
+          <p>Buying and selling used student items is still messy, unsafe, and time-consuming.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="icon">😤</div>
+            <h3>WhatsApp Chaos</h3>
+            <p>Students waste hours in unorganized group chats trying to find or sell second-hand items.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon">💸</div>
+            <h3>No Fair Pricing</h3>
+            <p>There is no clear price reference, so buyers may overpay and sellers may underprice.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon">🔒</div>
+            <h3>Low Safety</h3>
+            <p>No proper verification, ratings, or protection from scams, fake sellers, and no-shows.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <section class="objection" id="whatsapp">
+      <div class="container">
+        <div class="objection-box">
+          <h2>Why not just use WhatsApp?</h2>
+          <p>
+            WhatsApp groups are useful for quick messages, but they are not built for student trading.
+            Items get buried, prices are hard to compare, sellers are difficult to verify, and students often need to share personal phone numbers.
+          </p>
+          <p>
+            UniSwap BH solves this by adding verified student accounts, organized categories, item search, ratings,
+            safer campus meetup points, and in-app chat — all in one focused marketplace.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="solution" id="solution">
+      <div class="container">
+        <div class="section-title">
+          <h2>One App. Every Student. Every Campus.</h2>
+          <p>UniSwap turns student trading into a safer, smarter, and more organized experience.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="icon">🤖</div>
+            <h3>AI Pricing</h3>
+            <p>Suggests fair prices using item category, condition, and market-based data.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon">🎓</div>
+            <h3>Edu Verified</h3>
+            <p>Students sign up using university email to create a trusted student-only community.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon">⭐</div>
+            <h3>Ratings</h3>
+            <p>Students can rate buyers and sellers after deals to improve accountability.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon">📍</div>
+            <h3>Campus Map</h3>
+            <p>Choose safe meetup points inside campus for easier item handoffs.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon">💬</div>
+            <h3>Live Chat</h3>
+            <p>Chat directly inside the app without sharing personal phone numbers.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon">🔍</div>
+            <h3>Smart Search</h3>
+            <p>Filter by category, price, item condition, and university.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about" id="features">
+      <div class="container about-layout">
+        <div class="about-panel">
+          <h2>Trusted. Safe. For Students.</h2>
+          <p>
+            UniSwap BH helps students save money, reduce waste, and connect with other students
+            through a university-based marketplace.
+          </p>
+          <p>
+            Instead of random public marketplaces, UniSwap focuses on campus communities, student identity,
+            safe communication, and simple item discovery.
+          </p>
+
+          <ul class="check-list">
+            <li>✅ Buy and sell second-hand items</li>
+            <li>✅ Exchange items with nearby students</li>
+            <li>✅ Save money on university essentials</li>
+            <li>✅ Give items a second life</li>
+          </ul>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="icon">🛍️</div>
+            <h3>Buy & Sell</h3>
+            <p>Find great second-hand items or sell what you no longer need.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon">🔁</div>
+            <h3>Exchange</h3>
+            <p>Swap items with students around you easily and fairly.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon">🌱</div>
+            <h3>Sustainable</h3>
+            <p>Promote reuse and support a cleaner university community.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="steps" id="how">
+      <div class="container">
+        <div class="section-title">
+          <h2>How It Works</h2>
+          <p>Simple steps from listing an item to completing a safe campus deal.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="step-number">1</div>
+            <h3>Create Verified Account</h3>
+            <p>Register with your university email to join the student marketplace.</p>
+          </div>
+
+          <div class="card">
+            <div class="step-number">2</div>
+            <h3>Post or Search</h3>
+            <p>List an item, search by category, or discover featured student deals.</p>
+          </div>
+
+          <div class="card">
+            <div class="step-number">3</div>
+            <h3>Chat, Meet, Trade</h3>
+            <p>Agree on price or exchange, choose a campus meetup spot, and complete the deal.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="categories" id="categories">
+      <div class="container">
+        <div class="section-title">
+          <h2>Popular Categories</h2>
+          <p>Everything students need for university life in one clean marketplace.</p>
+        </div>
+
+        <div class="grid-4">
+          <div class="card"><div class="icon">💻</div><h3>Electronics</h3></div>
+          <div class="card"><div class="icon">📚</div><h3>Books</h3></div>
+          <div class="card"><div class="icon">👕</div><h3>Clothing</h3></div>
+          <div class="card"><div class="icon">🪑</div><h3>Home</h3></div>
+          <div class="card"><div class="icon">✏️</div><h3>Study Tools</h3></div>
+          <div class="card"><div class="icon">🎧</div><h3>Accessories</h3></div>
+          <div class="card"><div class="icon">🏠</div><h3>Dorm Items</h3></div>
+          <div class="card"><div class="icon">➕</div><h3>Others</h3></div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <section class="mockups" id="mockups">
+      <div class="container">
+        <div class="section-title">
+          <h2>App Mockups</h2>
+          <p>Replace these prototype placeholders with real Figma screenshots before presenting to investors or early users.</p>
+        </div>
+
+        <div class="mockup-grid">
+          <div class="mockup-card">
+            <div class="mockup-screen">Add Home Screen Screenshot</div>
+            <p>Show search, categories, and featured student items.</p>
+          </div>
+          <div class="mockup-card">
+            <div class="mockup-screen">Add Item Details Screenshot</div>
+            <p>Show item condition, price, seller rating, and chat button.</p>
+          </div>
+          <div class="mockup-card">
+            <div class="mockup-screen">Add Chat / Meetup Screenshot</div>
+            <p>Show safe communication and campus meetup flow.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="market">
+      <div class="container">
+        <div class="section-title">
+          <h2>Market Opportunity</h2>
+          <p>Starting in Bahrain universities, then scaling to the Gulf and MENA region.</p>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <h3>30K+</h3>
+            <p>Students in Bahrain</p>
+          </div>
+          <div class="stat">
+            <h3>6</h3>
+            <p>Major Universities</p>
+          </div>
+          <div class="stat">
+            <h3>500K+</h3>
+            <p>Gulf Students</p>
+          </div>
+          <div class="stat">
+            <h3>$2M+</h3>
+            <p>Market Potential</p>
+          </div>
+        </div>
+        <p class="trust-note">Note: Treat these as pitch estimates and replace them with cited official sources before investor or public presentations.</p>
+      </div>
+    </section>
+
+    <section class="revenue" id="revenue">
+      <div class="container">
+        <div class="section-title">
+          <h2>Revenue Model</h2>
+          <p>UniSwap BH is designed as a real startup with multiple scalable revenue streams.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="icon">💳</div>
+            <h3>5% Transaction Fee</h3>
+            <p>A small fee on successful sales completed through the platform.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon">📢</div>
+            <h3>Targeted Ads</h3>
+            <p>Student-focused ads from publishers, tutoring services, and campus brands.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon">⭐</div>
+            <h3>BHD 2/mo Premium</h3>
+            <p>Featured listings, priority search ranking, and seller analytics.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container">
+        <h2>Join the UniSwap BH Waitlist</h2>
+        <p>
+          Be one of the first students to test Bahrain's student marketplace. Join the waitlist,
+          tell us what you want to buy or sell, and help shape the launch.
+        </p>
+        <a class="btn btn-light" href="#contact">🚀 Join the Waitlist</a>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="container contact-layout">
+        <div class="contact-info">
+          <h3>Let's Build This Together</h3>
+          <p>
+            Interested in UniSwap BH? Contact us, join the waiting list, or support the launch
+            of Bahrain's student marketplace.
+          </p>
+          <div class="contact-pill">📧 uniswapbh@gmail.com</div>
+          <div class="contact-pill">📱 @UniSwapBH</div>
+          <div class="contact-pill">📍 Bahrain Universities</div>
+        </div>
+
+        <form id="contactForm" action="https://formspree.io/f/REPLACE_WITH_YOUR_FORM_ID" method="POST">
+          <div id="formStatus" class="form-status"></div>
+          <input type="hidden" name="_subject" value="New UniSwap BH waitlist message" />
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" placeholder="Enter your name" required />
+
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required />
+
+          <label for="university">University</label>
+          <input type="text" id="university" name="university" placeholder="Example: University of Bahrain" required />
+
+          <label for="interest">I want to</label>
+          <select id="interest" name="interest" required>
+            <option value="">Select option</option>
+            <option>Join the waiting list</option>
+            <option>Buy items</option>
+            <option>Sell items</option>
+            <option>Exchange items</option>
+            <option>Support UniSwap BH</option>
+          </select>
+
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" placeholder="Write your message" required></textarea>
+
+          <button class="btn btn-primary" type="submit" style="width: 100%;">Send Message</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 UniSwap BH. The Student Marketplace for Bahrain Universities.</p>
+  </footer>
+
+  <button class="top-btn" id="topBtn">↑</button>
+
+  <script>
+    const menuBtn = document.getElementById("menuBtn");
+    const navLinks = document.getElementById("navLinks");
+    const topBtn = document.getElementById("topBtn");
+
+    menuBtn.addEventListener("click", () => {
+      navLinks.classList.toggle("active");
+    });
+
+    document.querySelectorAll(".nav-links a").forEach((link) => {
+      link.addEventListener("click", () => navLinks.classList.remove("active"));
+    });
+
+    window.addEventListener("scroll", () => {
+      topBtn.style.display = window.scrollY > 450 ? "block" : "none";
+    });
+
+    topBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  
+    const form = document.getElementById("contactForm");
+    const formStatus = document.getElementById("formStatus");
+    const langToggle = document.getElementById("langToggle");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const endpoint = form.getAttribute("action");
+      const data = new FormData(form);
+
+      if (endpoint.includes("REPLACE_WITH_YOUR_FORM_ID")) {
+        const subject = encodeURIComponent("UniSwap BH Waitlist Message");
+        const body = encodeURIComponent(
+          `Name: ${data.get("name")}
+Email: ${data.get("email")}
+University: ${data.get("university")}
+Interest: ${data.get("interest")}
+
+Message:
+${data.get("message")}`
+        );
+        window.location.href = `mailto:uniswapbh@gmail.com?subject=${subject}&body=${body}`;
+        formStatus.className = "form-status success";
+        formStatus.textContent = runtimeMessages.mailOpened[currentLang];
+        return;
+      }
+
+      try {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          body: data,
+          headers: { Accept: "application/json" }
+        });
+
+        if (response.ok) {
+          formStatus.className = "form-status success";
+          formStatus.textContent = runtimeMessages.success[currentLang];
+          form.reset();
+        } else {
+          throw new Error("Form submission failed");
+        }
+      } catch (error) {
+        formStatus.className = "form-status error";
+        formStatus.textContent = runtimeMessages.error[currentLang];
+      }
+    });
+
+    const translations = {
+      "Problem": "المشكلة",
+      "Solution": "الحل",
+      "Features": "المميزات",
+      "Market": "السوق",
+      "Mockups": "نماذج التطبيق",
+      "Join": "انضم",
+      "🎓 Made for Students, By Students": "🎓 صُمم للطلاب بواسطة الطلاب",
+      "Buy. Sell. Swap.": "اشترِ. بِع. بادِل.",
+      "Smart.": "بذكاء.",
+      "UniSwap BH is a smart university marketplace where students can buy, sell, and exchange\n            second-hand items safely inside a trusted campus community.": "UniSwap BH هو سوق جامعي ذكي يساعد الطلاب على شراء وبيع وتبادل الأغراض المستعملة بأمان داخل مجتمع جامعي موثوق.",
+      "Join the Waitlist": "انضم إلى قائمة الانتظار",
+      "Explore the Idea": "استكشف الفكرة",
+      "🔐 Verified Students": "🔐 طلاب موثّقون",
+      "💬 Secure Chat": "💬 محادثة آمنة",
+      "♻️ Reduce Waste": "♻️ تقليل الهدر",
+      "Welcome to": "مرحباً بك في",
+      "Search for items...": "ابحث عن الأغراض...",
+      "Tech": "تقنية",
+      "Books": "كتب",
+      "Wear": "ملابس",
+      "Home": "منزل",
+      "Study": "دراسة",
+      "Featured Items": "أغراض مميزة",
+      "See all": "عرض الكل",
+      "Engineering Textbook": "كتاب هندسي",
+      "MacBook Air": "ماك بوك إير",
+      "Backpack": "حقيبة ظهر",
+      "+ List an Item": "+ أضف غرضاً",
+      "The Problem Students Face": "المشكلة التي يواجهها الطلاب",
+      "Buying and selling used student items is still messy, unsafe, and time-consuming.": "شراء وبيع أغراض الطلاب المستعملة ما زال غير منظم، وغير آمن، ويأخذ وقتاً طويلاً.",
+      "WhatsApp Chaos": "فوضى مجموعات واتساب",
+      "Students waste hours in unorganized group chats trying to find or sell second-hand items.": "يضيع الطلاب ساعات في مجموعات غير منظمة للبحث عن أغراض مستعملة أو بيعها.",
+      "No Fair Pricing": "لا توجد أسعار عادلة وواضحة",
+      "There is no clear price reference, so buyers may overpay and sellers may underprice.": "لا توجد مرجعية واضحة للأسعار، لذلك قد يدفع المشتري أكثر من اللازم أو يبيع الطالب بسعر أقل من قيمة الغرض.",
+      "Low Safety": "أمان منخفض",
+      "No proper verification, ratings, or protection from scams, fake sellers, and no-shows.": "لا يوجد توثيق واضح أو تقييمات أو حماية كافية من الاحتيال والبائعين الوهميين وعدم الالتزام بالمواعيد.",
+      "Why not just use WhatsApp?": "لماذا لا نستخدم واتساب فقط؟",
+      "WhatsApp groups are useful for quick messages, but they are not built for student trading.\n            Items get buried, prices are hard to compare, sellers are difficult to verify, and students often need to share personal phone numbers.": "مجموعات واتساب مفيدة للرسائل السريعة، لكنها ليست مصممة للبيع والشراء بين الطلاب. تختفي الإعلانات بسرعة، يصعب مقارنة الأسعار، يصعب التحقق من البائعين، وغالباً يحتاج الطلاب لمشاركة أرقامهم الشخصية.",
+      "UniSwap BH solves this by adding verified student accounts, organized categories, item search, ratings,\n            safer campus meetup points, and in-app chat — all in one focused marketplace.": "يعالج UniSwap BH هذه المشكلة من خلال حسابات طلابية موثقة، تصنيفات منظمة، بحث عن الأغراض، تقييمات، نقاط لقاء أكثر أماناً داخل الحرم الجامعي، ومحادثة داخل التطبيق في سوق واحد مخصص للطلاب.",
+      "One App. Every Student. Every Campus.": "تطبيق واحد. لكل طالب. في كل جامعة.",
+      "UniSwap turns student trading into a safer, smarter, and more organized experience.": "يحوّل UniSwap تجربة البيع والشراء بين الطلاب إلى تجربة أكثر أماناً وذكاءً وتنظيماً.",
+      "AI Pricing": "تسعير بالذكاء الاصطناعي",
+      "Suggests fair prices using item category, condition, and market-based data.": "يقترح أسعاراً عادلة بناءً على نوع الغرض وحالته وبيانات السوق.",
+      "Edu Verified": "توثيق جامعي",
+      "Students sign up using university email to create a trusted student-only community.": "يسجل الطلاب باستخدام البريد الجامعي لبناء مجتمع موثوق خاص بالطلاب.",
+      "Ratings": "التقييمات",
+      "Students can rate buyers and sellers after deals to improve accountability.": "يمكن للطلاب تقييم المشترين والبائعين بعد إتمام الصفقات لزيادة الثقة والمحاسبة.",
+      "Campus Map": "خريطة الحرم الجامعي",
+      "Choose safe meetup points inside campus for easier item handoffs.": "اختيار نقاط لقاء آمنة داخل الجامعة لتسليم الأغراض بسهولة.",
+      "Live Chat": "محادثة مباشرة",
+      "Chat directly inside the app without sharing personal phone numbers.": "تواصل داخل التطبيق دون الحاجة لمشاركة رقم الهاتف الشخصي.",
+      "Smart Search": "بحث ذكي",
+      "Filter by category, price, item condition, and university.": "فلترة حسب التصنيف والسعر وحالة الغرض والجامعة.",
+      "Trusted. Safe. For Students.": "موثوق. آمن. للطلاب.",
+      "UniSwap BH helps students save money, reduce waste, and connect with other students\n            through a university-based marketplace.": "يساعد UniSwap BH الطلاب على توفير المال وتقليل الهدر والتواصل مع طلاب آخرين من خلال سوق مبني حول المجتمع الجامعي.",
+      "Instead of random public marketplaces, UniSwap focuses on campus communities, student identity,\n            safe communication, and simple item discovery.": "بدلاً من الأسواق العامة العشوائية، يركز UniSwap على المجتمعات الجامعية، وهوية الطالب، والتواصل الآمن، وسهولة اكتشاف الأغراض.",
+      "✅ Buy and sell second-hand items": "✅ شراء وبيع الأغراض المستعملة",
+      "✅ Exchange items with nearby students": "✅ تبادل الأغراض مع طلاب قريبين",
+      "✅ Save money on university essentials": "✅ توفير المال في احتياجات الجامعة",
+      "✅ Give items a second life": "✅ منح الأغراض فرصة استخدام جديدة",
+      "Buy & Sell": "شراء وبيع",
+      "Find great second-hand items or sell what you no longer need.": "اعثر على أغراض مستعملة مناسبة أو بِع ما لم تعد تحتاجه.",
+      "Exchange": "تبادل",
+      "Swap items with students around you easily and fairly.": "بادل الأغراض مع الطلاب حولك بسهولة وعدالة.",
+      "Sustainable": "مستدام",
+      "Promote reuse and support a cleaner university community.": "شجع إعادة الاستخدام وادعم مجتمعاً جامعياً أكثر نظافة.",
+      "How It Works": "كيف يعمل التطبيق",
+      "Simple steps from listing an item to completing a safe campus deal.": "خطوات بسيطة من إضافة الغرض إلى إتمام صفقة آمنة داخل الجامعة.",
+      "Create Verified Account": "أنشئ حساباً موثقاً",
+      "Register with your university email to join the student marketplace.": "سجل ببريدك الجامعي للانضمام إلى سوق الطلاب.",
+      "Post or Search": "أضف أو ابحث",
+      "List an item, search by category, or discover featured student deals.": "أضف غرضاً، ابحث حسب التصنيف، أو اكتشف عروض الطلاب المميزة.",
+      "Chat, Meet, Trade": "تواصل، تقابل، تبادل",
+      "Agree on price or exchange, choose a campus meetup spot, and complete the deal.": "اتفق على السعر أو التبادل، اختر نقطة لقاء داخل الجامعة، وأكمل الصفقة.",
+      "Popular Categories": "التصنيفات الشائعة",
+      "Everything students need for university life in one clean marketplace.": "كل ما يحتاجه الطلاب للحياة الجامعية في سوق واحد منظم.",
+      "Electronics": "إلكترونيات",
+      "Clothing": "ملابس",
+      "Study Tools": "أدوات دراسية",
+      "Accessories": "إكسسوارات",
+      "Dorm Items": "أغراض السكن",
+      "Others": "أخرى",
+      "App Mockups": "نماذج التطبيق",
+      "Replace these prototype placeholders with real Figma screenshots before presenting to investors or early users.": "استبدل هذه النماذج الأولية بلقطات شاشة حقيقية من Figma قبل العرض على المستثمرين أو المستخدمين الأوائل.",
+      "Add Home Screen Screenshot": "أضف لقطة شاشة للصفحة الرئيسية",
+      "Show search, categories, and featured student items.": "اعرض البحث والتصنيفات والأغراض الطلابية المميزة.",
+      "Add Item Details Screenshot": "أضف لقطة شاشة لتفاصيل الغرض",
+      "Show item condition, price, seller rating, and chat button.": "اعرض حالة الغرض والسعر وتقييم البائع وزر المحادثة.",
+      "Add Chat / Meetup Screenshot": "أضف لقطة شاشة للمحادثة / اللقاء",
+      "Show safe communication and campus meetup flow.": "اعرض التواصل الآمن وخطوات اللقاء داخل الجامعة.",
+      "Market Opportunity": "فرصة السوق",
+      "Starting in Bahrain universities, then scaling to the Gulf and MENA region.": "البداية من جامعات البحرين، ثم التوسع إلى الخليج ومنطقة الشرق الأوسط وشمال أفريقيا.",
+      "Students in Bahrain": "طلاب في البحرين",
+      "Major Universities": "جامعات رئيسية",
+      "Gulf Students": "طلاب في الخليج",
+      "Market Potential": "فرصة سوقية محتملة",
+      "Note: Treat these as pitch estimates and replace them with cited official sources before investor or public presentations.": "ملاحظة: تعامل مع هذه الأرقام كتقديرات للعرض، واستبدلها بمصادر رسمية موثقة قبل عرضها على المستثمرين أو نشرها للجمهور.",
+      "Revenue Model": "نموذج الإيرادات",
+      "UniSwap BH is designed as a real startup with multiple scalable revenue streams.": "صُمم UniSwap BH كمشروع ناشئ حقيقي مع عدة مصادر دخل قابلة للتوسع.",
+      "5% Transaction Fee": "رسوم 5% على المعاملات",
+      "A small fee on successful sales completed through the platform.": "رسوم بسيطة على عمليات البيع الناجحة التي تتم عبر المنصة.",
+      "Targeted Ads": "إعلانات موجهة",
+      "Student-focused ads from publishers, tutoring services, and campus brands.": "إعلانات موجهة للطلاب من دور النشر وخدمات التدريس والعلامات التجارية الجامعية.",
+      "BHD 2/mo Premium": "اشتراك مميز 2 د.ب شهرياً",
+      "Featured listings, priority search ranking, and seller analytics.": "إعلانات مميزة، أولوية في نتائج البحث، وتحليلات للبائعين.",
+      "Join the UniSwap BH Waitlist": "انضم إلى قائمة انتظار UniSwap BH",
+      "Be one of the first students to test Bahrain's student marketplace. Join the waitlist,\n          tell us what you want to buy or sell, and help shape the launch.": "كن من أوائل الطلاب الذين يجربون سوق الطلاب في البحرين. انضم إلى قائمة الانتظار، وأخبرنا بما تريد شراءه أو بيعه، وساعدنا في تطوير الإطلاق.",
+      "🚀 Join the Waitlist": "🚀 انضم إلى قائمة الانتظار",
+      "Let's Build This Together": "لنبنِ هذا المشروع معاً",
+      "Interested in UniSwap BH? Contact us, join the waiting list, or support the launch\n            of Bahrain's student marketplace.": "مهتم بـ UniSwap BH؟ تواصل معنا، انضم إلى قائمة الانتظار، أو ادعم إطلاق سوق الطلاب في البحرين.",
+      "Bahrain Universities": "جامعات البحرين",
+      "Full Name": "الاسم الكامل",
+      "Email Address": "البريد الإلكتروني",
+      "University": "الجامعة",
+      "I want to": "أريد أن",
+      "Select option": "اختر خياراً",
+      "Join the waiting list": "أنضم إلى قائمة الانتظار",
+      "Buy items": "أشتري أغراضاً",
+      "Sell items": "أبيع أغراضاً",
+      "Exchange items": "أبادل أغراضاً",
+      "Support UniSwap BH": "أدعم UniSwap BH",
+      "Message": "الرسالة",
+      "Send Message": "إرسال الرسالة",
+      "© 2026 UniSwap BH. The Student Marketplace for Bahrain Universities.": "© 2026 UniSwap BH. سوق الطلاب لجامعات البحرين."
+    };
+
+    const attributeTranslations = {
+      "Enter your name": "اكتب اسمك",
+      "Enter your email": "اكتب بريدك الإلكتروني",
+      "Example: University of Bahrain": "مثال: جامعة البحرين",
+      "Write your message": "اكتب رسالتك",
+      "New UniSwap BH waitlist message": "رسالة جديدة لقائمة انتظار UniSwap BH"
+    };
+
+    const runtimeMessages = {
+      mailOpened: {
+        en: "Your email app opened. To receive messages directly on the site, replace the Formspree form ID in the HTML.",
+        ar: "تم فتح تطبيق البريد لديك. لاستلام الرسائل مباشرة من الموقع، استبدل Formspree form ID داخل ملف HTML."
+      },
+      success: {
+        en: "Thank you! You are now on the UniSwap BH waitlist.",
+        ar: "شكراً لك! تمت إضافتك إلى قائمة انتظار UniSwap BH."
+      },
+      error: {
+        en: "Something went wrong. Please email us directly at uniswapbh@gmail.com.",
+        ar: "حدث خطأ. يرجى مراسلتنا مباشرة على uniswapbh@gmail.com."
+      }
+    };
+
+    const textNodes = [];
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        return node.nodeValue.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+      }
+    });
+
+    while (walker.nextNode()) {
+      textNodes.push({ node: walker.currentNode, en: walker.currentNode.nodeValue });
+    }
+
+    const translatableAttributes = [];
+    document.querySelectorAll("input[placeholder], textarea[placeholder], input[type='hidden'][value]").forEach((el) => {
+      ["placeholder", "value"].forEach((attr) => {
+        if (el.hasAttribute(attr)) {
+          translatableAttributes.push({ el, attr, en: el.getAttribute(attr) });
+        }
+      });
+    });
+
+    let currentLang = "en";
+
+    function translateTextNode(original, lang) {
+      if (lang === "en") return original;
+      const trimmed = original.trim();
+      const normalized = trimmed.replace(/\s+/g, " ");
+      const matchKey = Object.keys(translations).find((key) => key.replace(/\s+/g, " ") === normalized);
+      if (!matchKey) return original;
+      const leading = original.match(/^\s*/)[0];
+      const trailing = original.match(/\s*$/)[0];
+      return `${leading}${translations[matchKey]}${trailing}`;
+    }
+
+    function applyLanguage(lang) {
+      currentLang = lang;
+      const isArabic = lang === "ar";
+      document.body.classList.toggle("ar", isArabic);
+      document.documentElement.lang = isArabic ? "ar" : "en";
+      document.documentElement.dir = isArabic ? "rtl" : "ltr";
+      langToggle.textContent = isArabic ? "English" : "العربية";
+
+      textNodes.forEach((item) => {
+        item.node.nodeValue = translateTextNode(item.en, lang);
+      });
+
+      translatableAttributes.forEach((item) => {
+        item.el.setAttribute(item.attr, isArabic && attributeTranslations[item.en] ? attributeTranslations[item.en] : item.en);
+      });
+    }
+
+    langToggle.addEventListener("click", () => {
+      applyLanguage(currentLang === "en" ? "ar" : "en");
+    });
+  </script>
+</body>
+</html>
